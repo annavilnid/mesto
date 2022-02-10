@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./pages/index.css">
+  <title>Mesto</title>
+</head>
+
+<body class="page">
+  <header class="header">
+    <img class="header__logo" src="./images/header-logo.svg" alt="логотип Место">
+  </header>
+
+  <main>
+    <section class="profile"> 
+      <img class="profile__avatar" src="./images/profile-avatar.jpg" alt="фотография профиля">
+      <div class="profile__info">
+        <h1 class="profile__title">Жак-Ив Кусто</h1>
+        <button class="profile__edit-button"></button>
+        <p class="profile__subtitle">Исследователь океана</p>
+      </div>
+      <button class="profile__add-button"></button>
+    </section>
+
+    <section class="popup"> 
+      <div class="popup__conteiner">
+        <button class="popup__close-button"></button>
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <form class="popup__form">
+          <input class="popup__form-name" />
+          <input class="popup__form-about" />
+          <button class="popup__save-button" type="submit">Сохранить</button>
+       </form>
+      </div>
+    </section>
+
+    <ul class="places">
+      <li class="place">
+        <img class="place__image" src="./images/place-kaliningrad.jpg" alt="Разноцветные домики">
+        <div class="place__info">
+          <h2 class="place__title">Калининград</h2>
+          <button class="place__like-button" type="button"></button>
+        </div>
+      </li>
+      <li class="place">
+        <img class="place__image" src="./images/place-sakhalin.jpg" alt="Бухта Тихая Сахалин">
+        <div class="place__info">
+          <h2 class="place__title">Сахалин</h2>
+          <button class="place__like-button" type="button"></button>
+        </div>
+      </li>
+      <li class="place">
+        <img class="place__image" src="./images/place-altai.jpg" alt="Чуйский тракт">
+        <div class="place__info">
+          <h2 class="place__title">Алтай</h2>
+          <button class="place__like-button" type="button"></button>
+        </div>
+      </li>
+      <li class="place">
+        <img class="place__image" src="./images/place-buryatia.jpg" alt="Тункинская предгорная долина">
+        <div class="place__info">
+          <h2 class="place__title">Калмыкия</h2>
+          <button class="place__like-button" type="button"></button>
+        </div>
+      </li>
+      <li class="place">
+        <img class="place__image" src="./images/place-dagestan.jpg" alt="Сулакский каньон">
+        <div class="place__info">
+          <h2 class="place__title">Дагестан</h2>
+          <button class="place__like-button" type="button"></button>
+        </div>
+      </li>
+      <li class="place">
+        <img class="place__image" src="./images/place-tatarstan.jpg" alt="Белая мечеть">
+        <div class="place__info">
+          <h2 class="place__title">Татарстан</h2>
+          <button class="place__like-button" type="button"></button>
+        </div>
+      </li>
+    </ul>
+  </main>
+
+  <footer class="footer">
+    <p class="footer__info" lang="en">&copy; 2022 Mesto Russia</p>
+  </footer>
+  <script src="./scripts/index.js"></script>
+</body>
+</html>

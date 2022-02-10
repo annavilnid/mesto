@@ -1,0 +1,12 @@
+.place__like-button {
+  margin: 0;
+  padding: 0;
+  min-width: 22px;
+  min-height: 19px;
+  border: none;
+  background: transparent url("../../../images/icon-like.svg");
+}
+
+.place__like-button:hover {
+  opacity: 0.5;
+}
