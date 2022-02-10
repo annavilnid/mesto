@@ -15,7 +15,7 @@
     max-width: 581px;
     list-style: none;
     grid-template-columns: repeat(auto-fill, 282px);
-    grid-template-rows: calc(282px+20px);
+    grid-template-rows: calc(282px + 20px);
     grid-row-gap: 20px;
     grid-column-gap: 17px;
   }
@@ -29,7 +29,7 @@
     max-width: 880px;
     list-style: none;
     grid-template-columns: repeat(auto-fill, 282px);
-    grid-template-rows: calc(282px+20px);
+    grid-template-rows: calc(282px + 20px);
     grid-row-gap: 20px;
     grid-column-gap: 17px;
   }
