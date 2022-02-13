@@ -9,6 +9,8 @@
   font-weight: normal;
   font-size: 14px;
   line-height: 1.21;
+  cursor: pointer;
+  transition: opacity 0.5s ease-in-out;
 }
 
 @media screen and (min-width: 1280px) {

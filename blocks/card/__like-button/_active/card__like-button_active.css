@@ -1,4 +1,4 @@
-.place__like-button:active {
+.card__like-button:active {
    background: transparent url("../../../../images/icon-like-black.svg");
    opacity: 1;
   }

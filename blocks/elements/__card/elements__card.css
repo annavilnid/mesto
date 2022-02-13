@@ -1,13 +1,15 @@
-.place {
+.elements__card {
   margin: 0 auto 20px;
   padding: 0;
-  min-width: 282px;
+  width: 100%;
+  max-width: 282px;
+  min-height: 361px;
   overflow: hidden;
   border-radius: 10px;
 }
 
 @media screen and (min-width: 615px) {
-  .place {
+  .elements__card {
     margin: 0;
   }
 }

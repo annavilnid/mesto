@@ -6,9 +6,9 @@ const infoElement = document.querySelector('.profile__info');
 const nameElement = infoElement.querySelector('.profile__title');
 const aboutElement = infoElement.querySelector('.profile__subtitle');
 const formElement = document.querySelector('.popup__form');
-const nameInput = formElement.querySelector('.popup__form-name');
-const aboutInput = formElement.querySelector('.popup__form-about');
-const popupSaveButtonElement = popupElement.querySelector('.popup__save-button');
+const nameInput = formElement.querySelector('.popup__input_data_name');
+const aboutInput = formElement.querySelector('.popup__input_data_about');
+
 
 //открытие всплывающего окна
 const openPopup = function() {
@@ -17,18 +17,12 @@ const openPopup = function() {
   nameInput.value = name;
   aboutInput.value = about;
   popupElement.classList.add('popup_is-opened')
-  console.log('Open popup clicked')
 }
 
 //закрытие всплывающего окна
 const closePopup = function() {
   popupElement.classList.remove('popup_is-opened')
-  console.log('popup closed')
 }
-
-//обработчик события для всплывающего окна
-popupOpenButtonElement.addEventListener('click', openPopup); 
-popupCloseButtonElement.addEventListener('click', closePopup); 
 
 //отправка формы
 function formSubmitHandler(evt) {
@@ -36,15 +30,16 @@ function formSubmitHandler(evt) {
     // Получите значение полей jobInput и nameInput из свойства value
     const valueNameInput = nameInput.value;
     const valueAboutInput = aboutInput.value;
-    // Выберите элементы, куда должны быть вставлены значения полей
-    const newNameElement = nameElement;
-    const newAboutElement = aboutElement;
     // Вставьте новые значения с помощью textContent
-    newNameElement.textContent = valueNameInput;
-    newAboutElement.textContent = valueAboutInput;
+    nameElement.textContent = valueNameInput;
+    aboutElement.textContent = valueAboutInput;
     closePopup();
-    console.log ('form send');
 }
 
+//обработчик события для всплывающего окна
+popupOpenButtonElement.addEventListener('click', openPopup);
+popupCloseButtonElement.addEventListener('click', closePopup);
+
+
 //обработчик события отправки формы
-formElement.addEventListener('submit', formSubmitHandler); 
+formElement.addEventListener('submit', formSubmitHandler);

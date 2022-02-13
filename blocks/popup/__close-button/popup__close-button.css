@@ -8,14 +8,16 @@
   background: transparent url("../../../images/close-icon.svg");
   background-size: cover;
   border: none;
+  cursor: pointer;
+  transition: opacity 0.5s ease-in-out;
 }
 
 @media screen and (min-width: 1280px) {
   .popup__close-button {
-  top: -40px;
-  right: -40px;
-  width: 32px;
-  height: 32px;
+    top: -40px;
+    right: -40px;
+    width: 32px;
+    height: 32px;
   }
 }
 

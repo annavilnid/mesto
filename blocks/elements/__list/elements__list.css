@@ -1,4 +1,4 @@
-.places {
+.elements__list {
   list-style: none;
   margin: 0 auto;
   padding: 0 0 28px;
@@ -8,28 +8,26 @@
 }
 
 @media screen and (min-width: 615px) and (max-width: 930px) {
-  .places {
+  .elements__list {
     padding: 0 17px 67px;
     display: grid;
     width: 100%;
     max-width: 581px;
     list-style: none;
     grid-template-columns: repeat(auto-fill, 282px);
-    grid-template-rows: calc(282px + 20px);
     grid-row-gap: 20px;
     grid-column-gap: 17px;
   }
 }
 
 @media screen and (min-width: 931px) {
-  .places {
+  .elements__list {
     padding: 0 17px 67px;
     display: grid;
     width: 100%;
     max-width: 880px;
     list-style: none;
     grid-template-columns: repeat(auto-fill, 282px);
-    grid-template-rows: calc(282px + 20px);
     grid-row-gap: 20px;
     grid-column-gap: 17px;
   }
