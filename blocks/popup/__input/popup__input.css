@@ -10,14 +10,14 @@
   outline: none;
   border-bottom: 1px solid rgba(0, 0, 0, .2);
 }
- 
+
 .popup__input:last-of-type {
-  padding-top: 30px; 
+  padding-top: 30px;
   margin-bottom: 45px;
 }
- 
+
 @media screen and (min-width: 1280px) {
   .popup__input:last-of-type {
-    margin-bottom: 48px; 
+    margin-bottom: 48px;
   }
 }
