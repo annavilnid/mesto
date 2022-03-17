@@ -4,14 +4,13 @@ const popupOpenButtonElementProfile = document.querySelector('.profile__edit-but
 const infoElementProfile = document.querySelector('.profile__info');
 const nameElementProfile = infoElementProfile.querySelector('.profile__title');
 const aboutElementProfile = infoElementProfile.querySelector('.profile__subtitle');
-const formElements = document.querySelectorAll('.popup__form');
-const formElementProfile = formElements[0];
+const formElementProfile = document.querySelector('.popup__form_action_edit-profile');
 const nameInputProfile = formElementProfile.querySelector('.popup__input_data_name');
 const aboutInputProfile = formElementProfile.querySelector('.popup__input_data_about');
 const popupElementCard = document.querySelector('.popup_action_add-card');
 const popupAddButtonCard = document.querySelector('.profile__add-button');
 const popupCloseButtonElementCard = popupElementCard.querySelector('.popup__close-button');
-const formElementCard = formElements[1];
+formElementCard = document.querySelector('.popup__form_action_add-card');
 const placeInputCard = formElementCard.querySelector('.popup__input_data_place');
 const linkInputCard = formElementCard.querySelector('.popup__input_data_place-link');
 const popupZoom = document.querySelector('.popup_action_zoom-card');
@@ -46,7 +45,6 @@ const initialcards = [
   }
 ];
 
-
 //сделать видимым модальное окно
 const showPopup = function(element) {
   element.classList.add('popup_is-opened')
@@ -73,22 +71,25 @@ const closePopup = function(element) {
   element.classList.remove('popup_is-opened')
 }
 
-//создание карточки
 function renderCard(card) {
   const cardTemplate = document.querySelector('#card').content;
-  const cardElement = cardTemplate.querySelector('.card').cloneNode(true); //querySelector('.card').?
+  const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
   cardElement.querySelector('.card__image').src = card.link;
   cardElement.querySelector('.card__image').alt = `Карточка местности ${card.name}`;
   cardElement.querySelector('.card__title').textContent = card.name;
   cardElement.querySelector('.card__remove-button').addEventListener ('click', handleDelete);
   cardElement.querySelector('.card__like-button').addEventListener ('click', handlelike);
-  cardElement.querySelector('.card__image').addEventListener ('click', zoomClickedImage);
+  cardElement.querySelector('.card__image').addEventListener ('click', () => zoomClickedImage(card.link, card.name));
+  return cardElement;
+}
+
+function addCard(cardElement) {
   document.querySelector('.elements__list').prepend(cardElement);
 }
 
 //создание карточек из массива
 function renderCards(cards) {
-  cards.forEach(renderCard);
+  cards.forEach(card => addCard(renderCard(card)));
 }
 
 renderCards(initialcards);
@@ -97,22 +98,19 @@ renderCards(initialcards);
 function submitСardHandlerForm(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
    // Получите значение полей jobInput и nameInput из свойства value
-  const card = {};
-  card.name = placeInputCard.value;
-  card.link = linkInputCard.value;
-  renderCard(card)
+   const card = {
+    name: placeInputCard.value,
+    link: linkInputCard.value
+  }
+  addCard(renderCard(card));
   closePopup(popupElementCard);
  }
 
 //отправка формы профиля
 function submitProfileHandlerForm(evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-    // Получите значение полей jobInput и nameInput из свойства value
-    const valueNameInputProfile = nameInputProfile.value;
-    const valueAboutInputProfile = aboutInputProfile.value;
-    // Вставьте новые значения с помощью textContent
-    nameElementProfile.textContent = valueNameInputProfile;
-    aboutElementProfile.textContent = valueAboutInputProfile;
+    nameElementProfile.textContent = nameInputProfile.value;
+    aboutElementProfile.textContent = aboutInputProfile.value;
     closePopup(popupElementProfile);
 }
 
@@ -128,13 +126,11 @@ function handlelike(event) {
   cardElement.classList.toggle('card__like-button_active')
 }
 
-
 //увеличить выбранную картинку
-function zoomClickedImage (event) {
-  const cardElement = event.target.closest('.card__image');
-  imageAttribure.setAttribute('src', cardElement.src);
-  imageAttribure.setAttribute('alt', cardElement.alt);
-  imageDescription.textContent = cardElement.alt.substr(19);
+function zoomClickedImage (link, name) {
+  imageAttribure.setAttribute('src', link);
+  imageAttribure.setAttribute('alt', name);
+  imageDescription.textContent = name;
   showPopup(popupZoom)
 }
 
