@@ -17,7 +17,7 @@ const popupZoom = document.querySelector('.popup_action_zoom-card');
 const popupCloseButtonZoomCard = popupZoom.querySelector('.popup__close-button');
 const imageAttribure = popupZoom.querySelector('.popup__image');
 const imageDescription = popupZoom.querySelector('.popup__figcaption');
-const cardConteiner = document.querySelector('.elements__list');
+const cardContainer = document.querySelector('.elements__list');
 
 
 
@@ -88,7 +88,7 @@ function renderCard(card) {
 
 function addCard(card) {
   const cardElement = renderCard(card);
-  cardConteiner.prepend(cardElement);
+  cardContainer.prepend(cardElement);
 }
 
 //создание карточек из массива
