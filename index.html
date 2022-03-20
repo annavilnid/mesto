@@ -27,7 +27,7 @@
       <div class="popup__container">
         <button class="popup__close-button" type="button" aria-label="закрыть"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form class="popup__form popup__form_action_edit-profile" name="popupFormProfile">
+        <form class="popup__form popup__form_action_edit-profile" name="popupFormProfile" novalidate>
           <input class="popup__input popup__input_data_name" name="userName" type="text" required placeholder="Имя"/>
           <input class="popup__input popup__input_data_about" name="userAbout" type="text" required placeholder="О себе"/>
           <button class="popup__save-button" type="submit">Сохранить</button>
@@ -39,7 +39,7 @@
       <div class="popup__container">
         <button class="popup__close-button" type="button" aria-label="закрыть"></button>
         <h2 class="popup__title">Новое место</h2>
-        <form class="popup__form popup__form_action_add-card" name="popupFormCard">
+        <form class="popup__form popup__form_action_add-card" name="popupFormCard" novalidate>
           <input class="popup__input popup__input_data_place" name="userPlace" type="text" required placeholder="Название"/>
           <input class="popup__input popup__input_data_place-link" name="userPlaceLink" type="text" required placeholder="Ссылка на картинку"/>
           <button class="popup__save-button" type="submit">Создать</button>

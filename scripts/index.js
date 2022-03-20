@@ -10,13 +10,16 @@ const aboutInputProfile = formElementProfile.querySelector('.popup__input_data_a
 const popupElementCard = document.querySelector('.popup_action_add-card');
 const popupAddButtonCard = document.querySelector('.profile__add-button');
 const popupCloseButtonElementCard = popupElementCard.querySelector('.popup__close-button');
-formElementCard = document.querySelector('.popup__form_action_add-card');
+const formElementCard = document.querySelector('.popup__form_action_add-card');
 const placeInputCard = formElementCard.querySelector('.popup__input_data_place');
 const linkInputCard = formElementCard.querySelector('.popup__input_data_place-link');
 const popupZoom = document.querySelector('.popup_action_zoom-card');
 const popupCloseButtonZoomCard = popupZoom.querySelector('.popup__close-button');
 const imageAttribure = popupZoom.querySelector('.popup__image');
 const imageDescription = popupZoom.querySelector('.popup__figcaption');
+const cardConteiner = document.querySelector('.elements__list');
+
+
 
 const initialcards = [
   {
@@ -51,14 +54,14 @@ const showPopup = function(element) {
 }
 
 //открытие всплывающего окна добавить карточку
-const openPopupAddPlace = function(element) {
+const openPopupAddPlace = function() {
   placeInputCard.value = '';
   linkInputCard.value = '';
   showPopup(popupElementCard);
 }
 
 //открытие всплывающего окна профиля
-const openPopupProfle = function(element) {
+const openPopupProfle = function() {
   const name = nameElementProfile.textContent;
   const about = aboutElementProfile.textContent;
   nameInputProfile.value = name;
@@ -83,13 +86,14 @@ function renderCard(card) {
   return cardElement;
 }
 
-function addCard(cardElement) {
-  document.querySelector('.elements__list').prepend(cardElement);
+function addCard(card) {
+  const cardElement = renderCard(card);
+  cardConteiner.prepend(cardElement);
 }
 
 //создание карточек из массива
 function renderCards(cards) {
-  cards.forEach(card => addCard(renderCard(card)));
+  cards.forEach(card => addCard(card));
 }
 
 renderCards(initialcards);
@@ -102,7 +106,7 @@ function submitСardHandlerForm(evt) {
     name: placeInputCard.value,
     link: linkInputCard.value
   }
-  addCard(renderCard(card));
+  addCard(card);
   closePopup(popupElementCard);
  }
 
