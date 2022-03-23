@@ -18,35 +18,7 @@ const popupCloseButtonZoomCard = popupZoom.querySelector('.popup__close-button')
 const imageAttribure = popupZoom.querySelector('.popup__image');
 const imageDescription = popupZoom.querySelector('.popup__figcaption');
 const cardContainer = document.querySelector('.elements__list');
-
-
-
-const initialcards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
+const popups = document.querySelectorAll('.popup');
 
 //сделать видимым модальное окно
 const showPopup = function(element) {
@@ -69,11 +41,12 @@ const openPopupProfle = function() {
   showPopup(popupElementProfile);
 }
 
-//закрытие всплывающего окна
+//универсальная функция закрытия попапов
 const closePopup = function(element) {
   element.classList.remove('popup_is-opened')
 }
 
+//отрисовка карточки с местом
 function renderCard(card) {
   const cardTemplate = document.querySelector('#card').content;
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
@@ -86,6 +59,7 @@ function renderCard(card) {
   return cardElement;
 }
 
+//добавление крточки с местом
 function addCard(card) {
   const cardElement = renderCard(card);
   cardContainer.prepend(cardElement);
@@ -99,23 +73,23 @@ function renderCards(cards) {
 renderCards(initialcards);
 
 //отправка формы карточки
-function submitСardHandlerForm(evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+function submitСardHandlerForm(event) {
+   event.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
    // Получите значение полей jobInput и nameInput из свойства value
    const card = {
-    name: placeInputCard.value,
-    link: linkInputCard.value
-  }
+   name: placeInputCard.value,
+   link: linkInputCard.value
+   }
   addCard(card);
   closePopup(popupElementCard);
- }
+}
 
 //отправка формы профиля
-function submitProfileHandlerForm(evt) {
-    evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-    nameElementProfile.textContent = nameInputProfile.value;
-    aboutElementProfile.textContent = aboutInputProfile.value;
-    closePopup(popupElementProfile);
+function submitProfileHandlerForm(event) {
+  event.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+  nameElementProfile.textContent = nameInputProfile.value;
+  aboutElementProfile.textContent = aboutInputProfile.value;
+  closePopup(popupElementProfile);
 }
 
 //удаление карточки
@@ -138,13 +112,33 @@ function zoomClickedImage (link, name) {
   showPopup(popupZoom)
 }
 
+//Закрытие всплывающего окна при нажатии на X или overlay
+const closePopupOverlayOrX = () => {
+  popups.forEach((popup) => {
+   popup.addEventListener('mousedown', (event) => {
+    if (event.target.classList.contains('popup__close-button')|| event.target.classList.contains('popup')) {
+     closePopup(popup);
+     }
+   });
+ });
+ };
+
+ closePopupOverlayOrX();
+
+//Закрытие всплывающего окна при нажатии Esc
+ function closePopupEsc(event) {
+   if (event.code === 'Escape') {
+       const openedPopup = document.querySelector('.popup_is-opened');
+       closePopup(openedPopup);
+   }
+ };
+
+
 //обработчик события для всплывающего окна профиля
 popupOpenButtonElementProfile.addEventListener('click', openPopupProfle);
-popupCloseButtonElementProfile.addEventListener('click', () => closePopup(popupElementProfile));
 
 //обработчик события для всплывающего окна карточки
 popupAddButtonCard.addEventListener('click', openPopupAddPlace);
-popupCloseButtonElementCard.addEventListener('click', () => closePopup(popupElementCard));
 
 //new обработчик события для всплывающего окна увеличенной карточки
 popupCloseButtonZoomCard.addEventListener('click', () => closePopup(popupZoom));
@@ -155,5 +149,5 @@ formElementProfile.addEventListener('submit', submitProfileHandlerForm);
 //обработчик события отправки формы карточки
 formElementCard.addEventListener('submit', submitСardHandlerForm);
 
-//new обработчик события для всплывающего окна увеличенной карточки
-popupCloseButtonZoomCard.addEventListener('click', () => closePopup(popupZoom));
+//обработчик события нажатия кнопки ESC(закрытие попапа)
+document.addEventListener('keydown', closePopupEsc);
