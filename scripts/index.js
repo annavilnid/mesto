@@ -19,10 +19,13 @@ const imageAttribure = popupZoom.querySelector('.popup__image');
 const imageDescription = popupZoom.querySelector('.popup__figcaption');
 const cardContainer = document.querySelector('.elements__list');
 const popups = document.querySelectorAll('.popup');
+const template = document.querySelector('#card');
 
 //сделать видимым модальное окно
 const showPopup = function(element) {
-  element.classList.add('popup_is-opened')
+  element.classList.add('popup_is-opened');
+  document.addEventListener('keydown', closePopupEsc);
+  enebleValidation(validationSettings);
 }
 
 //открытие всплывающего окна добавить карточку
@@ -43,12 +46,13 @@ const openPopupProfle = function() {
 
 //универсальная функция закрытия попапов
 const closePopup = function(element) {
-  element.classList.remove('popup_is-opened')
+  element.classList.remove('popup_is-opened');
+  document.removeEventListener('keydown', closePopupEsc);
 }
 
 //отрисовка карточки с местом
 function renderCard(card) {
-  const cardTemplate = document.querySelector('#card').content;
+  const cardTemplate = template.content;
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
   cardElement.querySelector('.card__image').src = card.link;
   cardElement.querySelector('.card__image').alt = `Карточка местности ${card.name}`;
@@ -149,5 +153,4 @@ formElementProfile.addEventListener('submit', submitProfileHandlerForm);
 //обработчик события отправки формы карточки
 formElementCard.addEventListener('submit', submitСardHandlerForm);
 
-//обработчик события нажатия кнопки ESC(закрытие попапа)
-document.addEventListener('keydown', closePopupEsc);
+

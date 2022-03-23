@@ -22,6 +22,8 @@
 
 @import url(../blocks/popup/popup.css);
 
+@import url(../blocks/popup/_action/popup_action_zoom-card.css);
+
 @import url(../blocks/popup/_is-opend/popup_is-opened.css);
 
 @import url(../blocks/popup/__container/popup__container.css);
