@@ -65,9 +65,9 @@ const toggleButtonState = (inputList, buttonElement, validationSettings) => {
 } else {
   buttonElement.removeAttribute('disabled');
   buttonElement.classList.remove(validationSettings.submitButtonDisabled);
-  console.log(buttonElement.classList);
 }
 };
 
+enebleValidation(validationSettings);
 
 

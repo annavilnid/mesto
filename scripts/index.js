@@ -20,12 +20,13 @@ const imageDescription = popupZoom.querySelector('.popup__figcaption');
 const cardContainer = document.querySelector('.elements__list');
 const popups = document.querySelectorAll('.popup');
 const template = document.querySelector('#card');
+const popupAddCard = document.querySelector('.popup_action_add-card');
+const buttonSubmitCard = popupAddCard.querySelector('.popup__save-button');
 
 //сделать видимым модальное окно
 const showPopup = function(element) {
   element.classList.add('popup_is-opened');
   document.addEventListener('keydown', closePopupEsc);
-  enebleValidation(validationSettings);
 }
 
 //открытие всплывающего окна добавить карточку
@@ -37,10 +38,8 @@ const openPopupAddPlace = function() {
 
 //открытие всплывающего окна профиля
 const openPopupProfle = function() {
-  const name = nameElementProfile.textContent;
-  const about = aboutElementProfile.textContent;
-  nameInputProfile.value = name;
-  aboutInputProfile.value = about;
+  nameInputProfile.value = nameElementProfile.textContent;
+  aboutInputProfile.value = aboutElementProfile.textContent;
   showPopup(popupElementProfile);
 }
 
@@ -86,6 +85,8 @@ function submitСardHandlerForm(event) {
    }
   addCard(card);
   closePopup(popupElementCard);
+  buttonSubmitCard.setAttribute('disabled', true);
+  buttonSubmitCard.classList.add('popup__save-button_disabled');
 }
 
 //отправка формы профиля
