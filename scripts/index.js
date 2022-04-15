@@ -23,9 +23,9 @@ import { Card } from './Card.js';
 
 //экземпляры классов
 const editProfileValidator = new FormValidator(validationSettings, formElementProfile);
-const addCardValidetor = new FormValidator(validationSettings, formElementCard);
+const addCardValidator = new FormValidator(validationSettings, formElementCard);
 editProfileValidator.enableValidation();
-addCardValidetor.enableValidation();
+addCardValidator.enableValidation();
 
 
 
@@ -45,6 +45,7 @@ export const showPopup = function(element) {
 const openPopupAddPlace = function() {
   placeInputCard.value = '';
   linkInputCard.value = '';
+  addCardValidator.resetValidation();
   showPopup(popupElementCard);
 }
 
@@ -52,6 +53,7 @@ const openPopupAddPlace = function() {
 const openPopupProfle = function() {
   nameInputProfile.value = nameElementProfile.textContent;
   aboutInputProfile.value = aboutElementProfile.textContent;
+  addCardValidator.resetValidation();
   showPopup(popupElementProfile);
 }
 
@@ -84,8 +86,7 @@ function submitСardHandlerForm(event) {
    }
   addCard(data, '.place-card');
   closePopup(popupElementCard);
-  buttonSubmitCard.setAttribute('disabled', true);
-  buttonSubmitCard.classList.add('popup__save-button_disabled');
+  addCardValidator.disableSubmitButton();
 }
 
 //отправка формы профиля
