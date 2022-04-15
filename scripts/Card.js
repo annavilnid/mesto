@@ -12,6 +12,7 @@ export class Card {
   //удалить каpточку
   _handleDelete = () => {
     this._cardElement.remove()
+    this._cardElement = null;
    }
 
 

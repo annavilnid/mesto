@@ -5,3 +5,7 @@
   object-fit: cover;
   background: #E5E5E5;
 }
+
+.card__image:hover {
+  opacity: 0.6;
+}

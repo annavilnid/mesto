@@ -17,8 +17,7 @@ export const imageDescription = popupZoom.querySelector('.popup__figcaption');
 export const popupCloseButtonZoomCard = popupZoom.querySelector('.popup__close-button');
 export const cardContainer = document.querySelector('.elements__list');
 export const popups = document.querySelectorAll('.popup');
-const popupAddCard = document.querySelector('.popup_action_add-card');
-export const buttonSubmitCard = popupAddCard.querySelector('.popup__save-button');
+
 
 export const initialcards = [
   {

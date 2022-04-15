@@ -15,7 +15,6 @@ import {
   popupCloseButtonZoomCard,
   cardContainer,
   popups,
-  buttonSubmitCard,
   initialcards,
   validationSettings } from './constants.js';
 import { FormValidator } from './FormValidator.js';
@@ -43,17 +42,16 @@ export const showPopup = function(element) {
 
 //открытие всплывающего окна добавить карточку
 const openPopupAddPlace = function() {
-  placeInputCard.value = '';
-  linkInputCard.value = '';
-  addCardValidator.resetValidation();
+  formElementCard.reset();
+  addCardValidator.resetErrors();
   showPopup(popupElementCard);
 }
 
 //открытие всплывающего окна профиля
-const openPopupProfle = function() {
+const openPopupProfile = function() {
   nameInputProfile.value = nameElementProfile.textContent;
   aboutInputProfile.value = aboutElementProfile.textContent;
-  addCardValidator.resetValidation();
+  editProfileValidator.resetErrors();
   showPopup(popupElementProfile);
 }
 
@@ -120,7 +118,7 @@ const closePopupOverlayOrX = () => {
 
 
 //обработчик события для всплывающего окна профиля
-popupOpenButtonElementProfile.addEventListener('click', openPopupProfle);
+popupOpenButtonElementProfile.addEventListener('click', openPopupProfile);
 
 //обработчик события для всплывающего окна карточки
 popupAddButtonCard.addEventListener('click', openPopupAddPlace);

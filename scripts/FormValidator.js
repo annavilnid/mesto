@@ -54,9 +54,8 @@ export class FormValidator {
     }
   }
 
-  resetValidation() {
+  resetErrors() {
     this._inputList.forEach((inputElement) => {
-        console.log(this._inputList);
         this._hideError(inputElement);
     });
 }
