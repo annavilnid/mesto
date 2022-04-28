@@ -18,31 +18,37 @@ export const popupCloseButtonZoomCard = popupZoom.querySelector('.popup__close-b
 export const cardContainer = document.querySelector('.elements__list');
 export const popups = document.querySelectorAll('.popup');
 
+import altai from '../images/place-altai.jpg';
+import buryatia from '../images/place-buryatia.jpg';
+import dagestan from '../images/place-dagestan.jpg';
+import kaliningrad from '../images/place-kaliningrad.jpg';
+import sakhalin from '../images/place-sakhalin.jpg';
+import tatarstan from '../images/place-tatarstan.jpg';
 
 export const initialcards = [
   {
     name: 'Алтай',
-    link: '../images/place-altai.jpg'
+    link: altai
   },
   {
     name: 'Бурятия',
-    link: '../images/place-buryatia.jpg'
+    link: buryatia
   },
   {
     name: 'Дагестан',
-    link: '../images/place-dagestan.jpg'
+    link: dagestan
   },
   {
     name: 'Калиниград',
-    link: '../images/place-kaliningrad.jpg'
+    link: kaliningrad
   },
   {
     name: 'Сахалин',
-    link: '../images/place-sakhalin.jpg'
+    link: sakhalin
   },
   {
     name: 'Татарстан',
-    link: '../images/place-tatarstan.jpg'
+    link: tatarstan
   }
 ];
 
