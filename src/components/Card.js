@@ -36,7 +36,7 @@ export class Card {
     this._cardElement.querySelector('.card__title').textContent = this._name;
 
     this._setEventListeners();
-
+  
     return this._cardElement;
   }
 }

@@ -6,15 +6,14 @@ export default class Section {
   }
 
   //добавляет в контейнер
-  addItem(cardData) {
-    const cardElement = this._renderer(cardData);
-    this._container.prepend(cardElement);
+  addItem(element) {
+    this._container.prepend(element);
   }
 
-  //перебирает карточки, добавляет в контейнер
+  //перебирает карточки
   renderItems() {
-    this._items.forEach((item) => {
-      this.addItem(item);
-    });
+    this._items.forEach(item => {
+      this._renderer(item)
+    })
   }
 }

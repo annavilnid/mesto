@@ -25,10 +25,10 @@ import kaliningrad from '../images/place-kaliningrad.jpg';
 import sakhalin from '../images/place-sakhalin.jpg';
 import tatarstan from '../images/place-tatarstan.jpg';
 
-export const initialcards = [
+export const initialCards = [
   {
-    name: 'Алтай',
-    link: altai
+    name: 'Татарстан',
+    link: tatarstan
   },
   {
     name: 'Бурятия',
@@ -47,8 +47,8 @@ export const initialcards = [
     link: sakhalin
   },
   {
-    name: 'Татарстан',
-    link: tatarstan
+    name: 'Алтай',
+    link: altai
   }
 ];
 

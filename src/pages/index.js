@@ -17,7 +17,7 @@ import {
   popupCloseButtonZoomCard,
   cardContainer,
   popups,
-  initialcards,
+  initialCards,
   validationSettings } from '../utils/constants.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { Card } from '../components/Card.js';
@@ -35,7 +35,7 @@ addCardValidator.enableValidation();
 //---ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ---
 
 //экземпляры классов информация о пользователе
-const userProfile = new UserInfo({name: '.profile__title', info: '.profile__subtitle'})
+const userProfile = new UserInfo('.profile__title', '.profile__subtitle')
 
 //экземпляры классов попап с формой (изменение данных пользователя)
  const editPopupProfile = new PopupWithForm('.popup_action_edit-profile', {
@@ -50,21 +50,22 @@ editPopupProfile.setEventListeners();
 
 //---КАРТОЧКИ---
 
+
 const createNewCard = (cardData) => {
   const cardElement = new Card({
     cardData, handleCardClick: () => {
           zoomPopupCard.open(cardData.name, cardData.link);
           }
       }, '.place-card');
-  return cardElement;
+  return cardElement.returnCard();
 }
 
 const createSection = new Section({
-items: initialcards,
-renderer: (initialcards) => {
-  const cardElement = createNewCard(initialcards);
-  return cardElement.returnCard();
-}
+  items: initialCards,
+  renderer: (item) => {
+    const cardElement = createNewCard(item);
+    createSection.addItem(cardElement);
+  }
 }, '.elements__list');
 
 createSection.renderItems();
@@ -75,7 +76,8 @@ createSection.renderItems();
 //экземпляры классов попап с карточкой
 const addPopupCard = new PopupWithForm('.popup_action_add-card', {
   submitHandlerForm: (cardData) => {
-    createSection.addItem(cardData);
+    const cardElement = createNewCard(cardData);
+    createSection.addItem(cardElement);
     addPopupCard.close();
     addCardValidator.disableSubmitButton();
   }
@@ -105,7 +107,8 @@ popupOpenButtonElementProfile.addEventListener('click', function () {
 
 //обработчик события для открытия формы карточки
 popupAddButtonCard.addEventListener('click', function () {
-  addPopupCard.open();
   addCardValidator.resetErrors();
+  addPopupCard.open();
 });
+
 
