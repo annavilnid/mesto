@@ -35,7 +35,7 @@ addCardValidator.enableValidation();
 //---ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ---
 
 //экземпляры классов информация о пользователе
-const userProfile = new UserInfo('.profile__title', '.profile__subtitle')
+const userProfile = new UserInfo({name: '.profile__title', info: '.profile__subtitle'});
 
 //экземпляры классов попап с формой (изменение данных пользователя)
  const editPopupProfile = new PopupWithForm('.popup_action_edit-profile', {
