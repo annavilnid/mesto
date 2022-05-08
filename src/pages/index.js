@@ -18,7 +18,6 @@ import {
   popupCloseButtonZoomCard,
   cardContainer,
   popups,
-  //initialCards,
   validationSettings } from '../utils/constants.js';
 import { FormValidator } from '../components/FormValidator.js';
 import { Card } from '../components/Card.js';

@@ -29,7 +29,8 @@ export class Card {
 
   _renderFunctionClick = () => {
     if (this._isOwnerLiked()) {
-      this._handleDislikeClick()
+      //this._handleDislikeClick()
+      console.log
     } else {
       this._handleLikeClick()
     }

@@ -9,8 +9,7 @@ export default class PopupWithConfirm extends Popup {
 
   //Перезаписывает родительский метод setEventListeners (добавлен вызов функции при сабмите)
   setEventListeners() {
-    super.setEventListeners()
-    console.log(this._form);
+    super.setEventListeners();
     this._form.addEventListener('submit', (event) => {
       event.preventDefault();
       this._submitHandlerForm()
