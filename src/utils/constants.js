@@ -3,6 +3,7 @@ export const popupOpenButtonElementProfile = document.querySelector('.profile__e
 const infoElementProfile = document.querySelector('.profile__info');
 export const nameElementProfile = infoElementProfile.querySelector('.profile__title');
 export const aboutElementProfile = infoElementProfile.querySelector('.profile__subtitle');
+export const avatarElementProfile = document.querySelector('.profile__avatar');
 export const formElementProfile = document.querySelector('.popup__form_action_edit-profile');
 export const nameInputProfile = formElementProfile.querySelector('.popup__input_data_name');
 export const aboutInputProfile = formElementProfile.querySelector('.popup__input_data_about');
@@ -17,6 +18,8 @@ export const imageDescription = popupZoom.querySelector('.popup__figcaption');
 export const popupCloseButtonZoomCard = popupZoom.querySelector('.popup__close-button');
 export const cardContainer = document.querySelector('.elements__list');
 export const popups = document.querySelectorAll('.popup');
+
+
 
 import altai from '../images/place-altai.jpg';
 import buryatia from '../images/place-buryatia.jpg';

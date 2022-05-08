@@ -25,17 +25,9 @@ import { Card } from '../components/Card.js';
 import UserInfo from '../components/UserInfo.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
-import PopupWithConfirm from '../components/PopupWithConfirm.js';
 import Section from '../components/Section.js';
 import Api from '../components/Api.js';
 
-let userId;
-
-//экземпляры классов валидация форм
-const editProfileValidator = new FormValidator(validationSettings, formElementProfile);
-const addCardValidator = new FormValidator(validationSettings, formElementCard);
-editProfileValidator.enableValidation();
-addCardValidator.enableValidation();
 
 //экземпляр Api
 const api = new Api({
@@ -46,68 +38,29 @@ const api = new Api({
   }
 })
 
-//экземпляры классов информация о пользователе
-const userProfile = new UserInfo({name: '.profile__title', info: '.profile__subtitle', avatar: '.profile__avatar'});
+
+
+
+
+//Тест
+const userProfileApi = api.getUserInfoApi();
+userProfileApi.then((data) => {
+  console.log(data + 'вывели профиль');
+  //nameElementProfile.textContent = data.name;
+  //aboutElementProfile.textContent = data.about;
+  //avatarElementProfile.src = data.avatar;
+});
+
+
+
 
 //экземпляр карточек и разметки
 const createNewCard = (cardData) => {
   const cardElement = new Card({
-    cardData,
-    handleCardClick: () => {
+    cardData, handleCardClick: () => {
           zoomPopupCard.open(cardData.name, cardData.link);
-    },
-
-    handleDeleteClick: () => {
-      console.log(cardData);
-          confirmDelitePopup.open()
-          confirmDelitePopup.setSubmitAction( () => {
-            api.deliteCardApi(cardData._id)
-            .then(() => {
-              cardElement.handleDelete()
-              confirmDelitePopup.close()
-            })
-            .catch((err) => console.log(err))
-          })
-    },
-
-    handleLikeClick: () => {
-      console.log('Вызов из index.js нравиться');
-      api.likeApi(cardData._id)
-      .then(() => {
-        cardElement.handlelike()
-      })
-      .catch((err) => console.log(err))
-    },
-
-    handleDislikeClick: () => {
-      console.log('Вызов из index.js не нравиться');
-      api.dislikeApi(cardData._id)
-      .then(() => {
-        cardElement.handlelike()
-      })
-      .catch((err) => console.log(err))
-    }
-
-      //handlelikeClick: () => {
-      //console.log('Вызов из index.js нравиться')
-      //console.log(cardData);
-      //api.likeApi(cardData._id)
-      //.then(() => {
-      //  cardElement.handlelike()
-      //})
-      //.catch((err) => console.log(err))
-    //},
-
-    //handleDislikeClick: () => {
-      //console.log('Вызов из index.js разонравилось')
-      //api.dislikeApi(cardData._id)
-      //.then(() => {
-        //cardElement.handlelike()
-      //})
-      //.catch((err) => console.log(err))
-    //}
-
-  }, '.place-card', userId);
+          }
+      }, '.place-card', userId);
   return cardElement.returnCard();
 }
 
@@ -116,7 +69,7 @@ const createSection = new Section (
     const cardElement = createNewCard({
       name: item.name,
       link: item.link,
-      _id: item._id,
+      id: item._id,
       likes: item.likes,
       owner: item.owner,
   });
@@ -124,11 +77,24 @@ const createSection = new Section (
   }, '.elements__list');
 
 
-// информация по всем промисам (профиль пользователя и карточки) при загрузке страницы
+
+
+//тест
+const cardsApi = api.getCardsApi();
+
+cardsApi.then((cardData) => {
+  console.log(cardData);
+});
+
+//экземпляры классов информация о пользователе
+const userProfile = new UserInfo({name: '.profile__title', info: '.profile__subtitle'});
+
+let userId;
+
+// информация по всем промисам (профиль пользователя и карточки)
 api.getDataApi()
   .then(( [cardsData, userData] ) => {
-    userProfile.setUserInfo(userData);
-    userProfile.setUserAvatar(userData);
+    userProfile.setUserInfo(userData)
     userId = userData._id
     createSection.renderItems(cardsData);
   })
@@ -139,21 +105,65 @@ api.getDataApi()
 
 
 
+//экземпляры классов валидация форм
+const editProfileValidator = new FormValidator(validationSettings, formElementProfile);
+const addCardValidator = new FormValidator(validationSettings, formElementCard);
+editProfileValidator.enableValidation();
+addCardValidator.enableValidation();
 
 
-//---ИЗМИНЕНИЕ ПРОФИЛЯ ПОЛЬЗОВАТЕЛЯ---
+
+console.log(editProfileValidator);
+
+
+
+
+
+
+
+
+
+/*
+
+//---ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ---
+
+
+//экземпляры классов информация о пользователе
+const userProfile = new UserInfo({name: '.profile__title', info: '.profile__subtitle'});
+
 
 //экземпляры классов попап с формой (изменение данных пользователя)
  const editPopupProfile = new PopupWithForm('.popup_action_edit-profile', {
-  submitHandlerForm: (formValues) => {
-    api.setUserInfoApi(formValues)
-    userProfile.setUserInfo(formValues);
+  submitHandlerForm: (userData) => {
+    //api.setUserInfoApi(userData);
+    userProfile.setUserInfo(userData);
     editPopupProfile.close();
 }
 });
 
 editPopupProfile.setEventListeners();
+*/
+//---КАРТОЧКИ---на удаление
 
+/*
+const createNewCard = (cardData) => {
+  const cardElement = new Card({
+    cardData, handleCardClick: () => {
+          zoomPopupCard.open(cardData.name, cardData.link);
+          }
+      }, '.place-card');
+  return cardElement.returnCard();
+}
+
+const createSection = new Section({
+  //items: initialCards,
+  renderer: (item) => {
+    const cardElement = createNewCard(item);
+    createSection.addItem(cardElement);
+  }
+}, '.elements__list');*/
+
+//createSection.renderItems();*/
 
 
 //---ДОБАВЛЕНИЕ НОВОЙ КАРТОЧКИ---
@@ -187,8 +197,8 @@ zoomPopupCard.setEventListeners();
 //обработчик события для открытия формы профиля
 popupOpenButtonElementProfile.addEventListener('click', function () {
   const userData = userProfile.getUserInfo();
-  nameInputProfile.value = userData.name;
-  aboutInputProfile.value = userData.about;
+  nameInputProfile.value = userData.userName;
+  aboutInputProfile.value = userData.userInfo;
   editProfileValidator.resetErrors();
   editPopupProfile.open();
 });
@@ -198,12 +208,5 @@ popupAddButtonCard.addEventListener('click', function () {
   addCardValidator.resetErrors();
   addPopupCard.open();
 });
-
-
-//---УДАЛЕНИЕ КАРТОЧКИ
-
-//экземпляры классов попапа с подтверждением удаления
-const confirmDelitePopup = new PopupWithConfirm ('.popup_confirm-delete');
-confirmDelitePopup.setEventListeners();
 
 
