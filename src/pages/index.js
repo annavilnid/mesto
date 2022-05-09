@@ -3,9 +3,11 @@ import "./index.css";
 import {
   popupElementProfile,
   popupOpenButtonElementProfile,
+  popupEditButtonAvatarProfile,
   nameElementProfile,
   aboutElementProfile,
   formElementProfile,
+  formElementAvatar,
   nameInputProfile,
   aboutInputProfile,
   avatarElementProfile,
@@ -32,8 +34,10 @@ let userId;
 
 //экземпляры классов валидация форм
 const editProfileValidator = new FormValidator(validationSettings, formElementProfile);
+const editAvatarValidator = new FormValidator(validationSettings, formElementAvatar)
 const addCardValidator = new FormValidator(validationSettings, formElementCard);
 editProfileValidator.enableValidation();
+editAvatarValidator.enableValidation();
 addCardValidator.enableValidation();
 
 //экземпляр Api
@@ -57,7 +61,6 @@ const createNewCard = (cardData) => {
     },
 
     handleDeleteClick: () => {
-      console.log(cardData);
           confirmDelitePopup.open()
           confirmDelitePopup.setSubmitAction( () => {
             api.deliteCardApi(cardData._id)
@@ -70,41 +73,30 @@ const createNewCard = (cardData) => {
     },
 
     handleLikeClick: () => {
-      console.log('Вызов из index.js нравиться');
+      console.log('понравилось');
       api.likeApi(cardData._id)
-      .then(() => {
-        cardElement.handlelike()
+      .then((apiData) => {
+        cardElement.getLikesArr(apiData.likes);
+        //cardElement.isOwnerLiked(apiData.likes);
+        console.log(apiData.likes);
+        cardElement.handlelike();
+        cardElement.contLikes(apiData.likes);
       })
       .catch((err) => console.log(err))
     },
 
     handleDislikeClick: () => {
-      console.log('Вызов из index.js не нравиться');
+      console.log('разонравилось');
       api.dislikeApi(cardData._id)
-      .then(() => {
-        cardElement.handlelike()
+      .then((apiData) => {
+        cardElement.getLikesArr(apiData.likes);
+        //cardElement.isOwnerLiked(apiData.likes);
+        console.log(apiData.likes);
+        cardElement.handlelike();
+        cardElement.contLikes(apiData.likes);
       })
       .catch((err) => console.log(err))
     }
-
-      //handlelikeClick: () => {
-      //console.log('Вызов из index.js нравиться')
-      //console.log(cardData);
-      //api.likeApi(cardData._id)
-      //.then(() => {
-      //  cardElement.handlelike()
-      //})
-      //.catch((err) => console.log(err))
-    //},
-
-    //handleDislikeClick: () => {
-      //console.log('Вызов из index.js разонравилось')
-      //api.dislikeApi(cardData._id)
-      //.then(() => {
-        //cardElement.handlelike()
-      //})
-      //.catch((err) => console.log(err))
-    //}
 
   }, '.place-card', userId);
   return cardElement.returnCard();
@@ -146,12 +138,33 @@ api.getDataApi()
  const editPopupProfile = new PopupWithForm('.popup_action_edit-profile', {
   submitHandlerForm: (formValues) => {
     api.setUserInfoApi(formValues)
-    userProfile.setUserInfo(formValues);
-    editPopupProfile.close();
-}
+    .then((apiData) => {
+      userProfile.setUserInfo(apiData);
+      editPopupProfile.close();
+    })
+    .catch((err) => console.log(err))
+  }
 });
 
 editPopupProfile.setEventListeners();
+
+
+//экземпляры классов попап с аватаром (изменение аватара пользователя)
+const editPopupAvatar = new PopupWithForm('.popup_action_edit-avatar', {
+  submitHandlerForm: (formValues) => {
+    renderLoading(true,  formElementAvatar, 'Сохраниить')
+    api.setUserAvatarApi(formValues)
+    .then((apiData) => {
+      userProfile.setUserAvatar(apiData);
+      editAvatarValidator.disableSubmitButton();
+      editPopupAvatar.close();
+    })
+    .catch((err) => console.log(err))
+    .finally (() => renderLoading(false, formElementAvatar, 'Сохранение'))
+  }
+});
+
+editPopupAvatar.setEventListeners();
 
 
 
@@ -159,15 +172,18 @@ editPopupProfile.setEventListeners();
 
 const addPopupCard = new PopupWithForm('.popup_action_add-card', {
   submitHandlerForm: (formValues) => {
+    renderLoading(true, formElementCard, 'Создать')
     api.addNewCardApi(formValues)
     .then((cardData) => {
-    const cardElement = createNewCard(cardData);
-    createSection.addItem(cardElement);
-    addPopupCard.close();
-    addCardValidator.disableSubmitButton();
+      const cardElement = createNewCard(cardData);
+      createSection.addItem(cardElement);
+      addPopupCard.close();
+      addCardValidator.disableSubmitButton();
    })
    .catch((err) => console.log(err))
+   .finally (() => renderLoading(false, formElementCard, 'Создать'))
   }
+
 });
 
 addPopupCard.setEventListeners();
@@ -181,6 +197,13 @@ const zoomPopupCard = new PopupWithImage('.popup_action_zoom-card');
 zoomPopupCard.setEventListeners();
 
 
+//---УДАЛЕНИЕ КАРТОЧКИ
+
+//экземпляры классов попапа с подтверждением удаления
+const confirmDelitePopup = new PopupWithConfirm ('.popup_confirm-delete');
+confirmDelitePopup.setEventListeners();
+
+
 //---ОБРАБОТЧИКИ---
 
 //обработчик события для открытия формы профиля
@@ -192,6 +215,13 @@ popupOpenButtonElementProfile.addEventListener('click', function () {
   editPopupProfile.open();
 });
 
+//обработчик события для открытия формы аватара
+popupEditButtonAvatarProfile.addEventListener('click', function () {
+  editAvatarValidator.resetErrors();
+  editPopupAvatar.open();
+});
+
+
 //обработчик события для открытия формы карточки
 popupAddButtonCard.addEventListener('click', function () {
   addCardValidator.resetErrors();
@@ -199,10 +229,15 @@ popupAddButtonCard.addEventListener('click', function () {
 });
 
 
-//---УДАЛЕНИЕ КАРТОЧКИ
 
-//экземпляры классов попапа с подтверждением удаления
-const confirmDelitePopup = new PopupWithConfirm ('.popup_confirm-delete');
-confirmDelitePopup.setEventListeners();
-
-
+//уведомление пользователя о процессе загркзки при сохранении форм(профиля аватара карточки)
+function renderLoading(isLoading, form, buttonText) {
+  const submitButton = form.querySelector('.popup__save-button')
+  if (isLoading) {
+    submitButton.textContent = 'Cохранение...';
+    submitButton.setAttribute('disabled', true);
+  } else {
+    submitButton.textContent = buttonText;
+    submitButton.removeAttribute('disabled');
+  }
+}

@@ -15,6 +15,11 @@ export class Card {
     this._handleDislikeClick = handleDislikeClick;
     this._userId = userId;
   }
+  
+  //получить актуальный массив лайков
+  getLikesArr = (likesData) => {
+    this._likes = likesData
+  }
 
   //удалить каpточку
   handleDelete = () => {
@@ -27,30 +32,28 @@ export class Card {
     this._cardElement.querySelector('.card__like-button').classList.toggle('card__like-button_active');
   }
 
-  _renderFunctionClick = () => {
-    if (this._isOwnerLiked()) {
-      //this._handleDislikeClick()
-      console.log
+  renderLikeFunctionClick = () => {
+    if (this.isOwnerLiked()) {
+      this._handleDislikeClick()
     } else {
       this._handleLikeClick()
     }
   }
 
-/*
-  _renderFunctionClick = () => {
-    if (this._isOwnerLiked() === false) {
-    this._handleLikeClick()
-    } else if (this._isOwnerLiked() === true) {
-    this._handleDislikeClick()
-    }
+  //счетчик лайков
+  contLikes = (arr) => {
+  this._cardElement.querySelector('.card__like-counter').textContent = arr.length;
   }
-*/
 
   //Метод для определения, поставил ли лайк текущий пользователь
-  _isOwnerLiked = () => {
+  isOwnerLiked = () => {
+    console.log('isOwnerLiked');
+    console.log(this._likes);
     const result = this._likes.some((data) => {
       return data._id === this._userId});
+      console.log(result);
     return result;
+
   }
 
 
@@ -59,7 +62,7 @@ export class Card {
     //слушатель удаления карточки
     this._cardElement.querySelector('.card__remove-button').addEventListener ('click', () => this.handleDeleteClick());
     //слушатель поставить лайк карточке
-    this._cardElement.querySelector('.card__like-button').addEventListener ('click', this._renderFunctionClick);
+    this._cardElement.querySelector('.card__like-button').addEventListener ('click', this.renderLikeFunctionClick);
     //слушатель увеличить карточку
     this._cardElement.querySelector('.card__image').addEventListener ('click', () => this.handleCardClick());
   }
@@ -74,7 +77,7 @@ export class Card {
     this._cardElement.querySelector('.card__title').textContent = this._name;
 
     //счетчик лайков
-    this._cardElement.querySelector('.card__like-counter').textContent = this._likes.length;
+    this.contLikes(this._likes);
 
     //убираем кнопку удаления у чужих карточек
     if(!(this._ownerId === this._userId)) {
@@ -82,7 +85,7 @@ export class Card {
     }
 
     //проверяем в каком состоянии отрисовывать кнопку лайком при загрузке
-    if (this._isOwnerLiked()) {
+    if (this.isOwnerLiked()) {
       this._cardElement.querySelector('.card__like-button').classList.add('card__like-button_active');
     }
 

@@ -70,7 +70,7 @@ export default class Api {
       method: 'PUT',
       headers: this._headers
     })
-    .then(this._checkResponse)
+    .then(this._checkResponseApi)
   }
 
   dislikeApi(id) {
@@ -78,63 +78,18 @@ export default class Api {
       method: 'DELETE',
       headers: this._headers
     })
-    .then(this._checkResponse)
-  }
-
-}
-
-/*
-  getUserApi() {
-    return fetch(this._url + '/users/me', {
-      method: 'GET',
-      headers: this._headers
-    })
-    .then((res) => {
-      return res.json();
-    })
-  }
-
-  getCardsApi() {
-    return fetch(this._url + '/cards', {
-      method: 'GET',
-      headers: this._headers,
-      body: JSON.stringify({
-        name: cardData.name,
-        link: cardData.link
-      })
-    })
     .then(this._checkResponseApi)
   }
 
-  getDataApi() {
-    return Promise.all([this.getCardsApi(), this.getUserApi()])
-  }
-
-
-
-  setUserInfoApi(userData) {
-    return fetch(this._url + '/users/me', {
+  setUserAvatarApi(data) {
+    return fetch(this._url + `/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        name: userData.userName,
-        about: userData.userInfo
+        avatar: data.avatar,
       })
     })
     .then(this._checkResponseApi)
   }
-
-  addCardApi() {
-    return fetch(this._url + '/cards', {
-      method: 'GET',
-      headers: this._headers,
-      body: JSON.stringify({
-        name: cardData.name,
-        link: cardData.link
-      })
-    })
-    .then(this._checkResponseApi)
-  }
-
 }
-*/
+
