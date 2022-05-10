@@ -30,6 +30,7 @@ import PopupWithConfirm from '../components/PopupWithConfirm.js';
 import Section from '../components/Section.js';
 import Api from '../components/Api.js';
 
+//переменная для ID пользователя
 let userId;
 
 //экземпляры классов валидация форм
@@ -73,12 +74,9 @@ const createNewCard = (cardData) => {
     },
 
     handleLikeClick: () => {
-      console.log('понравилось');
       api.likeApi(cardData._id)
       .then((apiData) => {
-        cardElement.getLikesArr(apiData.likes);
-        //cardElement.isOwnerLiked(apiData.likes);
-        console.log(apiData.likes);
+        cardElement.updateLikesArr(apiData.likes);
         cardElement.handlelike();
         cardElement.contLikes(apiData.likes);
       })
@@ -86,12 +84,9 @@ const createNewCard = (cardData) => {
     },
 
     handleDislikeClick: () => {
-      console.log('разонравилось');
       api.dislikeApi(cardData._id)
       .then((apiData) => {
-        cardElement.getLikesArr(apiData.likes);
-        //cardElement.isOwnerLiked(apiData.likes);
-        console.log(apiData.likes);
+        cardElement.updateLikesArr(apiData.likes);
         cardElement.handlelike();
         cardElement.contLikes(apiData.likes);
       })
@@ -126,23 +121,19 @@ api.getDataApi()
   .catch((err) => console.log(err))
 
 
-
-
-
-
-
-
 //---ИЗМИНЕНИЕ ПРОФИЛЯ ПОЛЬЗОВАТЕЛЯ---
 
 //экземпляры классов попап с формой (изменение данных пользователя)
  const editPopupProfile = new PopupWithForm('.popup_action_edit-profile', {
   submitHandlerForm: (formValues) => {
+    renderLoading(true,  formElementProfile, 'Сохранить')
     api.setUserInfoApi(formValues)
     .then((apiData) => {
       userProfile.setUserInfo(apiData);
       editPopupProfile.close();
     })
     .catch((err) => console.log(err))
+    .finally (() => renderLoading(false, formElementProfile, 'Сохранить'))
   }
 });
 
@@ -152,7 +143,7 @@ editPopupProfile.setEventListeners();
 //экземпляры классов попап с аватаром (изменение аватара пользователя)
 const editPopupAvatar = new PopupWithForm('.popup_action_edit-avatar', {
   submitHandlerForm: (formValues) => {
-    renderLoading(true,  formElementAvatar, 'Сохраниить')
+    renderLoading(true,  formElementAvatar, 'Сохранить')
     api.setUserAvatarApi(formValues)
     .then((apiData) => {
       userProfile.setUserAvatar(apiData);
@@ -160,7 +151,7 @@ const editPopupAvatar = new PopupWithForm('.popup_action_edit-avatar', {
       editPopupAvatar.close();
     })
     .catch((err) => console.log(err))
-    .finally (() => renderLoading(false, formElementAvatar, 'Сохранение'))
+    .finally (() => renderLoading(false, formElementAvatar, 'Сохранить'))
   }
 });
 
@@ -228,9 +219,9 @@ popupAddButtonCard.addEventListener('click', function () {
   addPopupCard.open();
 });
 
+//---UX---
 
-
-//уведомление пользователя о процессе загркзки при сохранении форм(профиля аватара карточки)
+//уведомление пользователя о процессе загрузки при сохранении форм(профиля аватара карточки)
 function renderLoading(isLoading, form, buttonText) {
   const submitButton = form.querySelector('.popup__save-button')
   if (isLoading) {
@@ -241,3 +232,4 @@ function renderLoading(isLoading, form, buttonText) {
     submitButton.removeAttribute('disabled');
   }
 }
+

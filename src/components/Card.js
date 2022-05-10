@@ -15,9 +15,9 @@ export class Card {
     this._handleDislikeClick = handleDislikeClick;
     this._userId = userId;
   }
-  
+
   //получить актуальный массив лайков
-  getLikesArr = (likesData) => {
+  updateLikesArr = (likesData) => {
     this._likes = likesData
   }
 
@@ -47,15 +47,10 @@ export class Card {
 
   //Метод для определения, поставил ли лайк текущий пользователь
   isOwnerLiked = () => {
-    console.log('isOwnerLiked');
-    console.log(this._likes);
     const result = this._likes.some((data) => {
       return data._id === this._userId});
-      console.log(result);
     return result;
-
   }
-
 
   //добавить слушателей
   _setEventListeners() {
@@ -66,8 +61,6 @@ export class Card {
     //слушатель увеличить карточку
     this._cardElement.querySelector('.card__image').addEventListener ('click', () => this.handleCardClick());
   }
-
-
 
   //возвращает готовую карточку
   returnCard(){
@@ -88,7 +81,6 @@ export class Card {
     if (this.isOwnerLiked()) {
       this._cardElement.querySelector('.card__like-button').classList.add('card__like-button_active');
     }
-
 
     this._setEventListeners();
     return this._cardElement;
